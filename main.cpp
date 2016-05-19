@@ -289,6 +289,8 @@ void vec_to_state(Vec v, E4State* state){
 					psi += 2*M_PI;
 
 				p->set_psi(psi);
+				p->set_z(buf[i*4+2]);
+				p->set_delta(buf[i*4+3]);
 			}
 		}// for
 
