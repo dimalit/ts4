@@ -13,6 +13,7 @@ double init_step;
 double atolerance, rtolerance;
 int N;
 double delta_0;
+double alpha;
 
 const double PI = 4*atan(1.0);
 
@@ -137,7 +138,7 @@ PetscErrorCode RHSFunction(TS ts, PetscReal t,Vec in,Vec out,void*){
 	if(rank == 0){
 		// RESOLVED: here appeared 2.0 and book should have E=E/sqrtR (without 2)
 		double dE = 1.0/2.0/N*sum_sin;
-		double dphi = - 1.0/2.0/N*sum_cos/ E;
+		double dphi = - 1.0/2.0/N*sum_cos / E;
 //		double dE = theta_e*E_e + 2.0/m*sum_cos;
 //		double dphi = (delta_e*E_e - 2.0/m*sum_sin) / E_e;
 			VecSetValue(out, 0, dE, INSERT_VALUES);
@@ -157,7 +158,7 @@ PetscErrorCode RHSFunction(TS ts, PetscReal t,Vec in,Vec out,void*){
 		VecGetValues(in, 4, indices, apzd);
 
 		double da = - 0.5*E*sin(apzd[1]-apzd[2] - phi);
-		double dp = apzd[3] - 0.5*E/apzd[0]*cos(apzd[1] - apzd[2] - phi);
+		double dp = apzd[3] - 0.5*E/apzd[0]*cos(apzd[1] - apzd[2] - phi) - alpha*apzd[0]*apzd[0];
 
 		VecSetValue(out, i, da, INSERT_VALUES);
 		VecSetValue(out, i+1, dp, INSERT_VALUES);

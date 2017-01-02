@@ -18,7 +18,7 @@ using namespace pb;
 #include <unistd.h>
 
 E4Config pconfig;
-E4PetscSolverConfig sconfig;
+EXPetscSolverConfig sconfig;
 E4State state;
 
 int rank;
@@ -112,6 +112,7 @@ int main(int argc, char** argv){
 	rtolerance = sconfig.rtol();
 	N = pconfig.n();
 	delta_0 = pconfig.delta_0();
+	alpha = pconfig.alpha();
 
 	Vec u;
 	VecCreate(PETSC_COMM_WORLD, &u);
